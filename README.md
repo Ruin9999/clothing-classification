@@ -1,1 +1,1 @@
-# clothing-classification-neural-networks
+# clothing-classification-visual-transformer

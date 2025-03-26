@@ -5,13 +5,14 @@ from torch.nn import functional as F
 
 # Implementation from https://arxiv.org/abs/2112.10752
 class Timestep(nn.Module):
-  def __init__(self, timestep_embedding_channels: int):
+  def __init__(self, timestep_embedding_channels: int, max_period: int = 10000):
     super().__init__()
     self.timestep_embedding_channels = timestep_embedding_channels
+    self.max_period = max_period
   
   def forward(self, timesteps: torch.Tensor) -> torch.Tensor:
     half_dim = self.timestep_embedding_channels // 2
-    exponent = -math.log(10000) 
+    exponent = -math.log(self.max_period) 
     exponent = exponent * torch.arange(0, half_dim).to(device=timesteps.device, dtype=torch.float32)
     exponent = exponent / half_dim
 

@@ -1,1 +1,1 @@
-from vision import *
+from .vision_transformer import *

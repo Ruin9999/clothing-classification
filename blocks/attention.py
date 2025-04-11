@@ -1,15 +1,17 @@
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
+from typing import Optional
 
 class SelfAttention(nn.Module):
-  def __init__(self, in_channels: int, num_heads: int = 8) -> None:
+  def __init__(self, in_channels: int, num_heads: int = 8, device: Optional[torch.device] = None) -> None:
     super().__init__()
     assert (in_channels % num_heads == 0), f"in_channels must be divisible by num_heads but got in_channels={in_channels} and num_heads={num_heads}"
 
     self.in_channels = in_channels
     self.num_heads = num_heads
     self.head_dim = in_channels // num_heads
+    self.device = device
 
     self.q = nn.Conv2d(in_channels, in_channels, kernel_size=1, stride=1, padding=0)
     self.k = nn.Conv2d(in_channels, in_channels, kernel_size=1, stride=1, padding=0)
